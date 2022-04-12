@@ -5,20 +5,18 @@ import org.openqa.selenium.support.FindBy;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ElectronicsPage extends BasePage {
+public class HeadphonesAndBluetoothHeadsetsPage extends BasePage {
 
-    public static final String NAMEPAGE = "ElectronicsPage";
+    public static final String NAMEPAGE = "HeadphonesAndBluetoothHeadsetsPage";
 
-    @FindBy(tagName = "h1")
+    @FindBy(xpath = "//div[@data-grabber='SearchTitle']")
     private WebElement title;
 
-    public ElectronicsPage checkOpenElectronicsPage(String pageName) {
+    public HeadphonesAndBluetoothHeadsetsPage checkOpenHeadphonesAndBluetoothHeadsetsPage(String pageName) {
         switchToWindow();
         waitElementToBeVisible(title);
         assertTrue(title.getText().contains(pageName),
                 "Страница не открылась/открылась не правильная страница");
         return this;
     }
-
-
 }

@@ -17,9 +17,6 @@ public class TVsPage extends BasePage {
     @FindBy(xpath = "//div[@data-grabber='SearchTitle']")
     private WebElement title;
 
-    @FindBy(xpath = "//span[text()='Все фильтры']")
-    private WebElement allFiltersButton;
-
     @FindBy(xpath = "//button[contains(@id, 'dropdown-control-')]")
     private WebElement amountOfElements;
 
@@ -36,14 +33,8 @@ public class TVsPage extends BasePage {
     public TVsPage checkOpenTVsPage(String pageName) {
         switchToWindow();
         waitElementToBeVisible(title);
-        assertTrue(title.getText().contains(pageName),
-                "Страница не открылась/открылась не правильная страница");
+        assertTrue(title.getText().contains(pageName), "Страница не открылась/открылась не правильная страница");
         return this;
-    }
-
-    public AllFiltersPage clickAllFiltersButton() {
-        waitElementToBeClickable(allFiltersButton).click();
-        return app.getAllFiltersPage();
     }
 
     public TVsPage checkAmountOfElements(String amount) {
@@ -60,7 +51,7 @@ public class TVsPage extends BasePage {
     }
 
     public TVsPage rememberElement(int elementNumber, String varName) {
-        WebElement productTitle = productList.get(elementNumber).findElement(By.xpath(".//h3[@data-zone-name='title']"));
+        WebElement productTitle = productList.get(elementNumber - 1).findElement(By.xpath(".//h3[@data-zone-name='title']"));
         saveElement(productTitle, varName);
         return this;
     }

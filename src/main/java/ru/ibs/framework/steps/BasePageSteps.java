@@ -27,6 +27,13 @@ public class BasePageSteps {
             case "Результаты поиска":
                 pagesManager.getSearchingResultsPage().checkOpenSearchingResultsPage();
                 break;
+            case "Наушники и аудиотехника":
+                pagesManager.getHeadphonesAndAudioEquipmentPage().checkOpenHeadphonesAndAudioEquipmentPage(pageName);
+                break;
+            case "Наушники и Bluetooth-гарнитуры":
+            case "Наушники":
+                pagesManager.getHeadphonesAndBluetoothHeadsetsPage().checkOpenHeadphonesAndBluetoothHeadsetsPage(pageName);
+                break;
             default:
                 fail("Не правильно указано название страницы");
         }
@@ -36,7 +43,7 @@ public class BasePageSteps {
     public void clickButton(String buttonName) {
         switch (buttonName) {
             case "Все фильтры":
-                pagesManager.getTVsPage().clickAllFiltersButton();
+                pagesManager.getCommonElementsPage().clickAllFiltersButton();
                 break;
             case "Показать предложения":
                 pagesManager.getAllFiltersPage().clickShowOffersButton();
@@ -44,5 +51,10 @@ public class BasePageSteps {
             default:
                 fail("Не правильно указано название кнопки");
         }
+    }
+
+    @И("^выбрать раздел \"(.*)\"$")
+    public void selectSection(String sectionName) {
+        pagesManager.getCommonElementsPage().selectMenuSection(sectionName);
     }
 }

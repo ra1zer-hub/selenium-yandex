@@ -69,5 +69,26 @@ public class PagesManager {
         return (SearchingResultsPage) basePageMap.get(SearchingResultsPage.NAMEPAGE);
     }
 
+    public HeadphonesAndAudioEquipmentPage getHeadphonesAndAudioEquipmentPage() {
+        if (basePageMap.isEmpty() || basePageMap.get(HeadphonesAndAudioEquipmentPage.NAMEPAGE) == null) {
+            basePageMap.put(HeadphonesAndAudioEquipmentPage.NAMEPAGE, new HeadphonesAndAudioEquipmentPage());
+        }
+        return (HeadphonesAndAudioEquipmentPage) basePageMap.get(HeadphonesAndAudioEquipmentPage.NAMEPAGE);
+    }
+
+    public HeadphonesAndBluetoothHeadsetsPage getHeadphonesAndBluetoothHeadsetsPage() {
+        if (basePageMap.isEmpty() || basePageMap.get(HeadphonesAndBluetoothHeadsetsPage.NAMEPAGE) == null) {
+            basePageMap.put(HeadphonesAndBluetoothHeadsetsPage.NAMEPAGE, new HeadphonesAndBluetoothHeadsetsPage());
+        }
+        return (HeadphonesAndBluetoothHeadsetsPage) basePageMap.get(HeadphonesAndBluetoothHeadsetsPage.NAMEPAGE);
+    }
+
+    public CommonElementsPage getCommonElementsPage() {
+        if (basePageMap.isEmpty() || basePageMap.get(CommonElementsPage.NAMEPAGE) == null) {
+            basePageMap.put(CommonElementsPage.NAMEPAGE, new CommonElementsPage());
+        }
+        return (CommonElementsPage) basePageMap.get(CommonElementsPage.NAMEPAGE);
+    }
+
 
 }

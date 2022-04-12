@@ -11,7 +11,8 @@ import ru.ibs.framework.managers.PagesManager;
 
 import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class BasePage {
@@ -100,7 +101,7 @@ public class BasePage {
                 WebElement closePromoButton = element.findElement(By.xpath("./following-sibling::button[@data-auto='closer']"));
                 waitElementToBeClickable(closePromoButton).click();
             }
-        } catch (NoSuchElementException ignored) {
+        } catch (WebDriverException ignored) {
 
         } finally {
             driverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(60));

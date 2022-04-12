@@ -23,7 +23,7 @@ public class AllFiltersPage extends BasePage {
     @FindBy(xpath = "//h4[text()='Производитель']/../following-sibling::div//label")
     private WebElement manufacturerCheckBox;
 
-    @FindBy(xpath = "//a[contains(@href, '/catalog--televizory/') and contains(text(),'Показать')]")
+    @FindBy(xpath = "//a[contains(@href, '/catalog--') and contains(text(),'Показать')]")
     private WebElement showOffersButton;
 
     public AllFiltersPage checkOpenAllFiltersPage(String pageName) {
