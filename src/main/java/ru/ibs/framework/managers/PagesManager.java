@@ -1,6 +1,7 @@
 package ru.ibs.framework.managers;
 
 
+import ru.ibs.framework.entities.Values;
 import ru.ibs.framework.pages.*;
 
 import java.util.HashMap;
@@ -23,6 +24,7 @@ public class PagesManager {
 
     public static void pagesIsNull() {
         basePageMap.clear();
+        Values.clearValues();
     }
 
     public MainYandexPage getMainYandexPage() {
@@ -58,6 +60,13 @@ public class PagesManager {
             basePageMap.put(AllFiltersPage.NAMEPAGE, new AllFiltersPage());
         }
         return (AllFiltersPage) basePageMap.get(AllFiltersPage.NAMEPAGE);
+    }
+
+    public SearchingResultsPage getSearchingResultsPage() {
+        if (basePageMap.isEmpty() || basePageMap.get(SearchingResultsPage.NAMEPAGE) == null) {
+            basePageMap.put(SearchingResultsPage.NAMEPAGE, new SearchingResultsPage());
+        }
+        return (SearchingResultsPage) basePageMap.get(SearchingResultsPage.NAMEPAGE);
     }
 
 

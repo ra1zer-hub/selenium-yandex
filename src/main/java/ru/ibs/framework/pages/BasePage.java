@@ -5,6 +5,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.ibs.framework.entities.Values;
 import ru.ibs.framework.managers.DriverManager;
 import ru.ibs.framework.managers.PagesManager;
 
@@ -26,23 +27,19 @@ public class BasePage {
     }
 
     protected WebElement scrollToElementJs(WebElement element) {
-        checkLoadedPage();
         js.executeScript("arguments[0].scrollIntoView(true);", element);
         return element;
     }
 
     protected WebElement waitElementToBeClickable(WebElement element) {
-        checkLoadedPage();
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
     protected WebElement waitElementToBeVisible(WebElement element) {
-        checkLoadedPage();
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
 
     protected boolean waitElementIsDisplayed(WebElement element) {
-        checkLoadedPage();
         try {
             return wait.until(ExpectedConditions.visibilityOf(element)).isDisplayed();
         } catch (Exception e) {
@@ -52,7 +49,6 @@ public class BasePage {
     }
 
     protected void fillInputField(WebElement element, String value) {
-        checkLoadedPage();
         scrollToElementJs(element);
         waitElementToBeClickable(element).click();
         element.clear();
@@ -62,7 +58,6 @@ public class BasePage {
     }
 
     protected void fillSelect(WebElement element, String value) {
-        checkLoadedPage();
         select = new Select(element);
         select.selectByVisibleText(value);
         String selectedOption = select.getFirstSelectedOption().getAttribute("text");
@@ -70,17 +65,16 @@ public class BasePage {
     }
 
     protected void selectCheckbox(WebElement checkbox, String checkboxName) {
-        checkLoadedPage();
-//        WebElement checkboxButton = checkbox.findElement(By.xpath("./input"));
-        if (!checkbox.isSelected()) {
+        WebElement checkboxButton = checkbox.findElement(By.xpath("./input"));
+        if (!checkboxButton.isSelected()) {
             waitElementToBeClickable(checkbox).click();
         }
-        assertTrue(checkbox.isSelected(), "Чекбокс '" + checkboxName + "' не выбран");
+        assertTrue(checkboxButton.isSelected(), "Чекбокс '" + checkboxName + "' не выбран");
     }
 
     protected void fillSearchField(WebElement field, String value) {
-        checkLoadedPage();
         waitElementToBeClickable(field).click();
+        field.clear();
         field.sendKeys(value);
         boolean checkFlag = wait.until(ExpectedConditions.attributeContains(field, "value", value));
         assertTrue(checkFlag, "Поле поиска было заполнено некорректно");
@@ -89,7 +83,6 @@ public class BasePage {
     }
 
     protected void fillDateField(WebElement element, String value) {
-        checkLoadedPage();
         scrollToElementJs(element);
         waitElementToBeClickable(element).click();
         element.clear();
@@ -99,23 +92,19 @@ public class BasePage {
         element.sendKeys(Keys.ESCAPE);
     }
 
-    private void checkLoadedPage() {
+    protected void promoClose(WebElement element) {
         driverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
-        String loading2 = "//div[@class='loader-mask']";
-        int i = 0;
-        while (i < 180) {
-            try {
-                if (driverManager.getDriver().findElement(By.xpath(loading2)).isDisplayed()) {
-                    sleep(1);
-                } else return;
-            } catch (NoSuchElementException ex) {
-                return;
-            } finally {
-                driverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
+
+        try {
+            if (element.isDisplayed() || element.isEnabled()) {
+                WebElement closePromoButton = element.findElement(By.xpath("./following-sibling::button[@data-auto='closer']"));
+                waitElementToBeClickable(closePromoButton).click();
             }
-            i++;
+        } catch (NoSuchElementException ignored) {
+
+        } finally {
+            driverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
         }
-        fail("Истекло время ожидания загрузки данных");
     }
 
     protected void switchToWindow() {
@@ -124,7 +113,11 @@ public class BasePage {
         }
     }
 
-    private void sleep(long seconds) {
+    protected void saveElement(WebElement productTitle, String varName) {
+        Values.getValues().put(varName, productTitle.getText());
+    }
+
+    protected void sleep(long seconds) {
         try {
             Thread.sleep(seconds * 1000);
         } catch (InterruptedException e) {

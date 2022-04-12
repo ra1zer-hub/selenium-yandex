@@ -14,9 +14,9 @@ public class Hooks {
         initFramework();
     }
 
-//    @After
-//    public static void after() {
-//        pagesIsNull();
-//        quitFramework();
-//    }
+    @After
+    public static void after() {
+        pagesIsNull();
+        quitFramework();
+    }
 }

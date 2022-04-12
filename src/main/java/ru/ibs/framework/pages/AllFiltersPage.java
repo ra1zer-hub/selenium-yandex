@@ -23,6 +23,9 @@ public class AllFiltersPage extends BasePage {
     @FindBy(xpath = "//h4[text()='Производитель']/../following-sibling::div//label")
     private WebElement manufacturerCheckBox;
 
+    @FindBy(xpath = "//a[contains(@href, '/catalog--televizory/') and contains(text(),'Показать')]")
+    private WebElement showOffersButton;
+
     public AllFiltersPage checkOpenAllFiltersPage(String pageName) {
         switchToWindow();
         waitElementToBeVisible(title);
@@ -43,12 +46,15 @@ public class AllFiltersPage extends BasePage {
 
     public AllFiltersPage selectManufacturer(String value) {
         fillDateField(manufacturer, value);
-        if (manufacturerCheckBox.getAttribute("value").trim().equalsIgnoreCase(value)) {
+        if (manufacturerCheckBox.getText().trim().equalsIgnoreCase(value)) {
             selectCheckbox(manufacturerCheckBox, value);
             return this;
         }
         return this;
     }
 
-
+    public TVsPage clickShowOffersButton() {
+        waitElementToBeClickable(showOffersButton).click();
+        return app.getTVsPage();
+    }
 }

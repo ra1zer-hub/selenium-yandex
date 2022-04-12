@@ -17,5 +17,4 @@ public class AllFiltersPageSteps {
         pagesManager.getAllFiltersPage().selectManufacturer(value);
     }
 
-
 }

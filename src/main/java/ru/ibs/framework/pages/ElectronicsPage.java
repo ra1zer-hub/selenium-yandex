@@ -5,7 +5,8 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class ElectronicsPage extends BasePage {
 
